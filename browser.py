@@ -3143,9 +3143,10 @@ async (nameHint) => {
                         all_people.append(p)
             return all_people
 
-        # Keyword for the free-text field
+        # Keyword for the free-text field — use query only, never fall back to title
+        # (title is already applied as a server-side filter; adding it as keyword too restricts results)
         effective_title = (titles_any[0] if titles_any else title) or ''
-        kw = query or effective_title
+        kw = query
 
         # Resolve location → geoUrn for server-side filtering
         HARDCODED_URNS = {
@@ -3200,8 +3201,9 @@ async (nameHint) => {
         people, seen = [], set()
         for page in range(50):           # max 50 pages ≈ 2,450 results
             start = page * page_size
+            kw_part = f'keywords:{quote(kw, safe="")},' if kw else ''
             variables = (
-                f'(query:(keywords:{quote(kw, safe="")},'
+                f'(query:({kw_part}'
                 f'flagshipSearchIntent:SEARCH_SRP,'
                 f'queryParameters:{filters},'
                 f'includeFiltersInResponse:false),'
