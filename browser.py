@@ -1,13 +1,14 @@
 """
 LinkedInBrowser — Playwright browser automation for LinkedIn actions.
 
-Two Brave profiles — select via LI_PROFILE env var:
-  sonesse  (default) → Brave + ~/.brave-paginator/profile        (matthew@sonesse.ai)
-  matthew            → Brave + ~/.brave-paginator/profile-matthew (matthewdewstowe@gmail.com)
+Three profiles — select via LI_PROFILE env var:
+  sonesse    (default) → Brave  + ~/.brave-paginator/profile          (matthew@sonesse.ai)
+  matthew              → Brave  + ~/.brave-paginator/profile-matthew   (matthewdewstowe@gmail.com) [job hunting]
+  nth-layer            → Chrome + ~/.chrome-paginator/profile-matthew  (matthewdewstowe@gmail.com) [Nth Layer outbound]
 
 To log into a profile for the first time, run:
-  LI_PROFILE=matthew python3 main.py login
-This launches Brave non-headless so you can sign in to LinkedIn.
+  LI_PROFILE=nth-layer python3 main.py login
+This launches the browser non-headless so you can sign in to LinkedIn.
 """
 
 import os
@@ -27,13 +28,18 @@ USE_DIRECT_HTTP = False  # both profiles use Playwright now
 
 _PROFILES = {
     'sonesse': {
-        'exe':  BRAVE_EXE,
-        'dir':  '/Users/matthew_dewstowe/.brave-paginator/profile',
+        'exe':     BRAVE_EXE,
+        'dir':     '/Users/matthew_dewstowe/.brave-paginator/profile',
         'account': 'matthew@sonesse.ai',
     },
     'matthew': {
-        'exe':  BRAVE_EXE,
-        'dir':  '/Users/matthew_dewstowe/.brave-paginator/profile-matthew',
+        'exe':     BRAVE_EXE,
+        'dir':     '/Users/matthew_dewstowe/.brave-paginator/profile-matthew',
+        'account': 'matthewdewstowe@gmail.com',
+    },
+    'nth-layer': {
+        'exe':     CHROME_EXE,
+        'dir':     '/Users/matthew_dewstowe/.chrome-paginator/profile-matthew',
         'account': 'matthewdewstowe@gmail.com',
     },
 }
